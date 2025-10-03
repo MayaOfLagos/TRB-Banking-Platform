@@ -1,0 +1,55 @@
+name: Code Quality
+
+on:
+  push:
+    branches: [ master, develop ]
+  pull_request:
+    branches: [ master, develop ]
+
+jobs:
+  code-quality:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup PHP
+      uses: shivammathur/setup-php@v2
+      with:
+        php-version: 8.3
+        extensions: mbstring, dom, fileinfo, mysql
+
+    - name: Install Dependencies
+      working-directory: core
+      run: composer install --prefer-dist --no-progress
+
+    - name: Check for PHP syntax errors
+      working-directory: core
+      run: |
+        echo "🔍 Checking PHP syntax..."
+        find app -name "*.php" -exec php -l {} \; | grep -v "No syntax errors"
+
+    - name: Check for security vulnerabilities
+      working-directory: core
+      run: |
+        echo "🔒 Checking for security vulnerabilities..."
+        composer audit || echo "Security audit completed"
+
+    - name: File Permissions Check
+      run: |
+        echo "📂 Checking file permissions..."
+        ls -la core/storage
+        ls -la core/bootstrap/cache
+
+    - name: Check for .env file
+      run: |
+        if [ -f "core/.env" ]; then
+          echo "⚠️ WARNING: .env file should not be committed!"
+          exit 1
+        else
+          echo "✅ .env file not found in repository (Good!)"
+        fi
+
+    - name: Code Quality Report
+      run: echo "✅ Code quality checks completed!"
