@@ -1,0 +1,13 @@
+{
+  "type": "service_account",
+  "project_id": "amy-salon-equipments",
+  "private_key_id": "01b050b4a1db7cab52042cebd24a71dc61255934",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCk1bD5sVlN4A+r\nypD1JtQqp3KhzQdLnrWF96ENqFozmjryHQfM3+s3ZP72Ec3WsnqwHkfmxv4LCGz+\nRtGNGBr7v8RhmxsaWRJbWYuTIKZdnYp34tirVWk/t6JG0tY7aSDig1KeYJS5dXTb\nHHO7yyjhgnJqPUDgjLLvjNWFn5wNEX3sB4Uw3oIn7iGYuqjx+MneSguNKVk3LIVP\nb+c/VnD9X78MAn6HY0qPTKwhSdck4Dj3qbUNKNle5PcW3yLJUi+IwZChnf94+12x\novuyjhRBwjel+QzpfDydjaugByjgjfYHUXUB/5rnyzNWAH+hDTs/rlLWQcSkVhb5\nuFSA+iM3AgMBAAECggEABuLum9/u7TP5M6Io4DUZFBce0Oex8FTXHJu13M41xoYh\nBFB2LPcF6rCLflhMEzYtrgH12wxhPLDDbPQkeRKSvgXK/JDwVu91tt9M1367tJmK\nWWvexXmyBfl0DCVu0diYiR4Xa4p5bC4eDbFonGXmdVVv1kRs23TFXQCzQvviFyGc\nxy4tCDxGgX+JK4whzMdE92ntatKM2aiv1FyOpse9/IPSbTIpfpUWcKFtisNo4ZdO\nhm+v9Sho/6Iu1kYP+Np3bz5I9irS4F637DiSken+fTaKsBFdM1le3uihYBmfANO3\n6Qm+qlf+PavPvYCAVsOpewscWyRwZl4aPBLyz2aF4QKBgQDTjqCYSKQxNGoynFZR\nTpZ1lz8njY1YZH5uDEMEdpwPPCJ9Nok5nQWRgkchnk3ySTl78bGx1q4TbX7O8OhN\nKEV1im3KU46n5t9tkb39pCUeZ9/Cjn2Y3AhHGCHfMM8sSMs4CxnRgqG6UFy6rLYe\nv66ZVEX6aGYfUetq4PdfEhG4/wKBgQDHdl7dWQ1eD+9lETbGoTomBnHZRP0V7yWh\nWxMsJjCuBqIl4EO5KJT6hsUCu74H64dP1zMRKJt7s2RuCvPRzbOAbN6CAiitGqfI\n9EcXoSaJ1yuVMsdxXi6/06IAWf6phh2N2yamS1Ha03PzBaUWVj5CTDeYW9T06FeK\ny2m8LeUdyQKBgBmsOD7iqdIyyyRjJnJteALDHO3e1qVAZLtUD5nuDtgmcwUA5jww\nmulihuFEha7+RdSNqwOqyqse4YGZaIdceLlf2BzycOBdOwXf5s9t6Pc8ocHJauJu\n6S4/dnTQRoPYPZkKd9Kd6KRkdixNIziuCDEhMfDGVIY+ebQZostNtQrfAoGBAIOe\nmq7ZiradMU2x9EFSNrrM2eeTXKZSrrQxEw+5C7pqaikwOcA/BT/kGrDZDmbPhvSq\nfuo9r4wLLqRm2cmCQYbnUFTd89V2l21FtHvlPTcMI5hKb81hZtvyXR56RE+9TldD\nW9e0MAmEKykcenmo42CARtdlEbuibdIKtHUWm+/xAoGBAIc8Y514z4UvVgw4+Ayh\nU9pZidBBYK9ogM6MMSS37iH17YZGKQe8cSJdMrvTwAV7kUZ+D+zaiyefhPcycGfr\n/N+14fCNTtTpGFhQk1XjAJ0oyD8nD7aUFmVb8j2sXjl6Q5hOcSzn7/9O/xIX59qP\n0XvdCrEI8wbK5j2SfIDmoGXm\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-fbsvc@amy-salon-equipments.iam.gserviceaccount.com",
+  "client_id": "106372842977890078829",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-fbsvc%40amy-salon-equipments.iam.gserviceaccount.com",
+  "universe_domain": "googleapis.com"
+}

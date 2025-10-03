@@ -1,0 +1,66 @@
+# Environment variables
+.env
+.env.backup
+.env.production
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Laravel specific
+core/vendor/
+core/node_modules/
+core/storage/*.key
+core/storage/debugbar/
+core/storage/logs/*.log
+core/storage/framework/cache/*
+core/storage/framework/sessions/*
+core/storage/framework/views/*
+!core/storage/framework/.gitignore
+!core/storage/framework/cache/.gitignore
+!core/storage/framework/sessions/.gitignore
+!core/storage/framework/views/.gitignore
+
+# Composer
+core/composer.lock
+
+# NPM
+core/package-lock.json
+core/npm-debug.log
+core/yarn-error.log
+
+# Build files
+core/public/hot
+core/public/storage
+core/public/mix-manifest.json
+core/bootstrap/cache/*.php
+!core/bootstrap/cache/.gitignore
+
+# User uploads
+assets/images/user/*
+assets/images/withdraw/*
+assets/images/gateway/*
+assets/images/deposit/*
+assets/images/ticket/*
+assets/images/logoIcon/*
+assets/images/seo/*
+assets/images/language/*
+assets/images/extensions/*
+assets/images/firebase/*
+assets/images/withdraw_method/*
+
+# Temporary files
+*.tmp
+*.temp
+*.cache
+
+# Documentation builds
+docs/_build/

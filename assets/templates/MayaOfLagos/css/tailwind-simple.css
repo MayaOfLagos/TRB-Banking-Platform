@@ -1,0 +1,27 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* MayaOfLagos Custom Styles */
+
+:root {
+    --primary: #16a085;
+    --secondary: #f39c12;
+    --accent: #e74c3c;
+}
+
+.btn-primary {
+    @apply bg-teal-600 text-white px-4 py-2 rounded-lg;
+}
+
+.btn-secondary {
+    @apply bg-orange-500 text-white px-4 py-2 rounded-lg;
+}
+
+.card {
+    @apply bg-white rounded-xl shadow-lg p-6;
+}
+
+.lagos-pattern {
+    background: linear-gradient(135deg, rgba(22, 160, 133, 0.1) 0%, rgba(243, 156, 18, 0.1) 100%);
+}

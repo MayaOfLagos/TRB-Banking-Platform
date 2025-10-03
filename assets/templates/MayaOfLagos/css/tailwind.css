@@ -1,0 +1,130 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom MayaOfLagos Theme Variables */
+
+:root {
+    --primary-color: #16a085;
+    --secondary-color: #f39c12;
+    --accent-color: #e74c3c;
+    --dark-color: #2c3e50;
+    --light-color: #ecf0f1;
+    --text-primary: #2c3e50;
+    --text-secondary: #7f8c8d;
+    --success-color: #27ae60;
+    --warning-color: #f39c12;
+    --error-color: #e74c3c;
+    --info-color: #3498db;
+}
+
+
+/* Custom Components */
+
+@layer components {
+    .btn-primary {
+        @apply bg-teal-600 hover: bg-teal-700 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out transform hover: scale-105;
+    }
+    .btn-secondary {
+        @apply bg-orange-500 hover: bg-orange-600 text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out;
+    }
+    .btn-outline {
+        @apply border-2 border-teal-600 text-teal-600 hover: bg-teal-600 hover: text-white font-semibold py-2 px-4 rounded-lg transition-all duration-300 ease-in-out;
+    }
+    .card {
+        @apply bg-white rounded-xl shadow-lg p-6 transition-all duration-300 hover: shadow-xl;
+    }
+    /* Modal Components (Bootstrap replacement) */
+    .modal-dialog {
+        @apply fixed inset-0 z-50 flex items-center justify-center p-4;
+    }
+    .modal-dialog-centered {
+        @apply items-center;
+    }
+    .modal-content {
+        @apply bg-white rounded-xl shadow-2xl max-w-lg w-full max-h-[90vh] overflow-hidden;
+    }
+    .modal-header {
+        @apply flex items-center justify-between p-6 border-b border-gray-200;
+    }
+    .modal-title {
+        @apply text-lg font-semibold text-gray-900;
+    }
+    .modal-body {
+        @apply p-6 overflow-y-auto;
+    }
+    .gradient-bg {
+        @apply bg-gradient-to-br from-teal-600 via-teal-700 to-slate-800;
+    }
+    .text-gradient {
+        @apply bg-gradient-to-r from-teal-600 to-orange-500 bg-clip-text text-transparent;
+    }
+    .navbar {
+        @apply bg-white/90 backdrop-blur-sm shadow-lg border-b border-gray-200;
+    }
+    .hero-section {
+        @apply min-h-screen flex items-center justify-center gradient-bg text-white;
+    }
+    .section-padding {
+        @apply py-16 px-4 sm: px-6 lg: px-8;
+    }
+    .container-custom {
+        @apply max-w-7xl mx-auto;
+    }
+    .form-input {
+        @apply w-full px-4 py-3 border border-gray-300 rounded-lg focus: ring-2 focus: ring-teal-500 focus: border-transparent transition-all duration-300;
+    }
+    .animate-float {
+        animation: float 6s ease-in-out infinite;
+    }
+    .animate-slide-up {
+        animation: slideUp 0.8s ease-out forwards;
+    }
+}
+
+
+/* Custom Animations */
+
+@keyframes float {
+    0%,
+    100% {
+        transform: translateY(0px);
+    }
+    50% {
+        transform: translateY(-20px);
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+
+/* Responsive Design Enhancements */
+
+@media (max-width: 768px) {
+    .hero-section {
+        @apply min-h-[80vh];
+    }
+    .section-padding {
+        @apply py-12 px-4;
+    }
+}
+
+
+/* Lagos-inspired Design Elements */
+
+.lagos-pattern {
+    background-image: radial-gradient(circle at 25% 25%, rgba(22, 160, 133, 0.1) 0%, transparent 50%), radial-gradient(circle at 75% 75%, rgba(243, 156, 18, 0.1) 0%, transparent 50%);
+}
+
+.african-text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}

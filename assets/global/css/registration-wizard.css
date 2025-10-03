@@ -1,0 +1,445 @@
+/**
+ * Multi-Step Registration Wizard Styles
+ * Enhanced styling for the registration form wizard
+ */
+
+
+/* Form Step Transitions */
+
+.form-step {
+    display: none;
+    opacity: 0;
+    transform: translateX(20px);
+    transition: all 0.3s ease-in-out;
+}
+
+.form-step.active {
+    display: block;
+    opacity: 1;
+    transform: translateX(0);
+}
+
+
+/* Step Indicators */
+
+.step-indicator {
+    transition: all 0.3s ease-in-out;
+}
+
+.step-indicator.active .step-circle {
+    transform: scale(1.1);
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.2);
+}
+
+.step-indicator.completed .step-circle {
+    background: linear-gradient(135deg, #10b981, #059669);
+}
+
+.step-circle {
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+.step-circle::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+}
+
+.step-indicator.active .step-circle::before {
+    left: 100%;
+}
+
+
+/* Progress Lines Animation */
+
+.progress-fill {
+    transition: width 0.6s ease-in-out;
+    background: linear-gradient(90deg, #10b981, #059669);
+}
+
+
+/* Input Field Enhancements */
+
+.form-step input:focus,
+.form-step select:focus {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.15);
+}
+
+.form-step input.border-emerald-500 {
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%2310B981' stroke-width='2' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+}
+
+
+/* Button Animations */
+
+.btn-next,
+.btn-prev {
+    position: relative;
+    overflow: hidden;
+}
+
+.btn-next::before,
+.btn-prev::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+}
+
+.btn-next:hover::before,
+.btn-prev:hover::before {
+    left: 100%;
+}
+
+
+/* Loading States */
+
+.btn-loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.btn-loading .loading-text {
+    display: flex;
+    align-items: center;
+}
+
+
+/* Form Validation Enhancements */
+
+.field-error {
+    animation: shake 0.5s ease-in-out;
+}
+
+@keyframes shake {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-5px);
+    }
+    75% {
+        transform: translateX(5px);
+    }
+}
+
+
+/* Password Strength Indicator */
+
+#password-strength {
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    overflow: hidden;
+}
+
+#password-strength::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(100%);
+    }
+}
+
+
+/* Mobile Optimizations */
+
+@media (max-width: 640px) {
+    .step-indicator span {
+        display: none !important;
+    }
+    .progress-line {
+        margin: 0 2rem;
+    }
+    .form-step {
+        padding: 0rem;
+    }
+    .btn-next,
+    .btn-prev {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+
+/* Dark Mode Enhancements */
+
+.dark .step-circle {
+    border: 1px solid rgba(75, 85, 99, 0.3);
+}
+
+.dark .form-step input:focus,
+.dark .form-step select:focus {
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.25);
+}
+
+.dark .progress-line {
+    background: rgba(75, 85, 99, 0.5);
+}
+
+
+/* Success Animation */
+
+.success-step {
+    animation: successPulse 0.6s ease-in-out;
+}
+
+@keyframes successPulse {
+    0% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+    100% {
+        transform: scale(1);
+    }
+}
+
+
+/* Step Transition Effects */
+
+.step-slide-in {
+    animation: slideIn 0.4s ease-out;
+}
+
+@keyframes slideIn {
+    0% {
+        opacity: 0;
+        transform: translateX(30px);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+.step-slide-out {
+    animation: slideOut 0.3s ease-in;
+}
+
+@keyframes slideOut {
+    0% {
+        opacity: 1;
+        transform: translateX(0);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(-30px);
+    }
+}
+
+
+/* Enhanced Focus Styles */
+
+.form-step input:focus,
+.form-step select:focus,
+.form-step textarea:focus {
+    outline: none;
+    border-color: #10b981;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+
+/* Checkbox and Radio Enhancements */
+
+.form-step input[type="checkbox"]:checked {
+    background-color: #10b981;
+    border-color: #10b981;
+}
+
+.form-step input[type="checkbox"]:focus {
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1);
+}
+
+
+/* Notification Styles */
+
+.notification-enter {
+    animation: notificationSlide 0.3s ease-out;
+}
+
+@keyframes notificationSlide {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+
+/* Background Pattern Animation */
+
+.auth-background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(circle at 1px 1px, rgba(16, 185, 129, 0.15) 1px, transparent 0);
+    background-size: 20px 20px;
+    animation: patternMove 20s linear infinite;
+    opacity: 0.5;
+}
+
+@keyframes patternMove {
+    0% {
+        background-position: 0 0;
+    }
+    100% {
+        background-position: 20px 20px;
+    }
+}
+
+
+/* Input Group Styling */
+
+.input-group {
+    position: relative;
+}
+
+.input-group .input-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #6b7280;
+    pointer-events: none;
+    transition: color 0.3s ease;
+}
+
+.input-group input:focus+.input-icon {
+    color: #10b981;
+}
+
+
+/* Progress Bar Glow Effect */
+
+.progress-line .progress-fill {
+    box-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+}
+
+
+/* Smooth Form Transitions */
+
+.form-container {
+    position: relative;
+    overflow: hidden;
+}
+
+.form-step {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    min-height: 400px;
+}
+
+.form-step.active {
+    position: relative;
+}
+
+
+/* Enhanced Button States */
+
+.btn-next:disabled,
+.btn-prev:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+}
+
+.btn-next:hover:not(:disabled),
+.btn-prev:hover:not(:disabled) {
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.25);
+}
+
+
+/* Loading Spinner */
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.animate-spin {
+    animation: spin 1s linear infinite;
+}
+
+
+/* Form Field Labels */
+
+.form-step label {
+    transition: color 0.3s ease;
+}
+
+.form-step input:focus+label,
+.form-step select:focus+label {
+    color: #10b981;
+}
+
+
+/* Error State Animations */
+
+.field-error {
+    border-color: #ef4444 !important;
+    animation: fieldError 0.3s ease-in-out;
+}
+
+@keyframes fieldError {
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+    25% {
+        transform: translateX(-3px);
+    }
+    75% {
+        transform: translateX(3px);
+    }
+}
+
+
+/* Success State */
+
+.field-success {
+    border-color: #10b981 !important;
+    background-image: url("data:image/svg+xml,%3csvg width='100%25' height='100%25' xmlns='http://www.w3.org/2000/svg'%3e%3crect width='100%25' height='100%25' fill='none' stroke='%2310B981' stroke-width='2' stroke-dasharray='6%2c 14' stroke-dashoffset='0' stroke-linecap='square'/%3e%3c/svg%3e");
+}

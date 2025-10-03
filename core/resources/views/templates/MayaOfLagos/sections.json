@@ -1,0 +1,280 @@
+{
+    "banner": {
+        "builder": true,
+        "no_selection": true,
+        "name": "Hero Banner Section",
+        "content": {
+            "images": {
+                "background_image": {
+                    "size": "1920x1080"
+                },
+                "hero_image": {
+                    "size": "600x700"
+                },
+                "user_avatars": {
+                    "size": "60x60"
+                }
+            },
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea",
+            "primary_button_text": "text",
+            "primary_button_link": "text",
+            "secondary_button_text": "text",
+            "secondary_button_link": "text",
+            "video_link": "text",
+            "stats_users": "text",
+            "stats_experience": "text",
+            "stats_transactions": "text"
+        }
+    },
+    "about": {
+        "builder": true,
+        "name": "About Us Section",
+        "content": {
+            "images": {
+                "about_image": {
+                    "size": "600x600"
+                },
+                "pattern_image": {
+                    "size": "400x400"
+                }
+            },
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea",
+            "button_text": "text",
+            "button_link": "text",
+            "years_experience": "text",
+            "experience_text": "text"
+        },
+        "element": {
+            "title": "text",
+            "description": "textarea",
+            "icon": "icon",
+            "modal": true
+        }
+    },
+    "service": {
+        "builder": true,
+        "name": "Services Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea"
+        },
+        "element": {
+            "title": "text",
+            "description": "textarea",
+            "icon": "icon",
+            "link": "text",
+            "modal": true
+        }
+    },
+    "feature": {
+        "builder": true,
+        "name": "Features Section",
+        "content": {
+            "images": {
+                "feature_image": {
+                    "size": "700x800"
+                }
+            },
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea",
+            "button_text": "text",
+            "button_link": "text"
+        },
+        "element": {
+            "title": "text",
+            "description": "textarea",
+            "icon": "icon",
+            "modal": true
+        }
+    },
+    "how_it_work": {
+        "builder": true,
+        "name": "How It Works Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea",
+            "video_link": "text"
+        },
+        "element": {
+            "title": "text",
+            "description": "textarea",
+            "icon": "icon",
+            "step_number": "text",
+            "modal": true
+        }
+    },
+    "loan_plans": {
+        "builder": true,
+        "name": "Loan Plans Section",
+        "content": {
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea",
+            "button_text": "text",
+            "button_link": "text"
+        }
+    },
+    "why_choose": {
+        "builder": true,
+        "name": "Why Choose Us Section",
+        "content": {
+            "images": {
+                "choose_image": {
+                    "size": "600x700"
+                }
+            },
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea"
+        },
+        "element": {
+            "title": "text",
+            "description": "textarea",
+            "icon": "icon",
+            "modal": true
+        }
+    },
+    "counter": {
+        "builder": true,
+        "name": "Statistics Counter Section",
+        "content": {
+            "images": {
+                "background_image": {
+                    "size": "1920x600"
+                }
+            },
+            "heading": "text",
+            "description": "textarea"
+        },
+        "element": {
+            "title": "text",
+            "number": "text",
+            "suffix": "text",
+            "icon": "icon",
+            "modal": true
+        }
+    },
+    "testimonial": {
+        "builder": true,
+        "name": "Customer Testimonials",
+        "content": {
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea"
+        },
+        "element": {
+            "name": "text",
+            "position": "text",
+            "company": "text",
+            "review": "textarea",
+            "rating": "text",
+            "images": {
+                "avatar": {
+                    "size": "80x80"
+                }
+            },
+            "modal": true
+        }
+    },
+    "partner_section": {
+        "builder": true,
+        "name": "Partners & Sponsors",
+        "content": {
+            "heading": "text",
+            "subheading": "text"
+        },
+        "element": {
+            "name": "text",
+            "link": "text",
+            "images": {
+                "logo": {
+                    "size": "200x100"
+                }
+            },
+            "modal": true
+        }
+    },
+    "subscribe": {
+        "builder": true,
+        "name": "Newsletter Subscription",
+        "content": {
+            "images": {
+                "background_image": {
+                    "size": "1920x400"
+                }
+            },
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea",
+            "button_text": "text"
+        }
+    },
+    "blog": {
+        "builder": true,
+        "name": "Latest News & Articles",
+        "content": {
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea",
+            "button_text": "text",
+            "button_link": "text"
+        }
+    },
+    "contact_section": {
+        "builder": true,
+        "name": "Contact Information",
+        "content": {
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea",
+            "office_hours": "text",
+            "emergency_contact": "text"
+        },
+        "element": {
+            "title": "text",
+            "info": "text",
+            "icon": "icon",
+            "link": "text",
+            "modal": true
+        }
+    },
+    "cta_section": {
+        "builder": true,
+        "name": "Call to Action",
+        "content": {
+            "images": {
+                "background_image": {
+                    "size": "1920x600"
+                }
+            },
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea",
+            "primary_button_text": "text",
+            "primary_button_link": "text",
+            "secondary_button_text": "text",
+            "secondary_button_link": "text"
+        }
+    },
+    "faq": {
+        "builder": true,
+        "name": "Frequently Asked Questions",
+        "content": {
+            "heading": "text",
+            "subheading": "text",
+            "description": "textarea"
+        },
+        "element": {
+            "question": "text",
+            "answer": "textarea",
+            "modal": true
+        }
+    }
+}

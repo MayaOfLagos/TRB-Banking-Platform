@@ -1,0 +1,229 @@
+@php
+    $footer = getContent('footer.content', true);
+    $socialLinks = getContent('social_link.element', orderById: true);
+    $policyPages = getContent('policy_pages.element', orderById: true);
+    $contact = getContent('contact_us.content', true);
+    $cookie = App\Models\Frontend::where('data_keys', 'cookie.data')->first();
+@endphp
+
+{{-- Cookie Policy Banner --}}
+@if ($cookie->data_values->status == Status::ENABLE && !\Cookie::get('gdpr_cookie'))
+    <div class="cookies-card fixed bottom-6 left-6 right-6 lg:left-auto lg:max-w-md bg-white border border-gray-200 rounded-xl shadow-lg p-6 z-50 hide">
+        <div class="flex items-start space-x-4">
+            <div class="flex-shrink-0 w-10 h-10 bg-teal-600 rounded-full flex items-center justify-center">
+                <i class="fas fa-cookie-bite text-white"></i>
+            </div>
+            <div class="flex-1">
+                <p class="text-sm text-gray-700 mb-4">
+                    {{ @$cookie->data_values->short_desc }} 
+                    <a href="{{ route('cookie.policy') }}" target="_blank" class="text-teal-600 hover:text-teal-700 font-medium">@lang('Learn more')</a>
+                </p>
+                <button class="btn-primary w-full text-sm policy">@lang('Allow')</button>
+            </div>
+        </div>
+    </div>
+@endif
+
+{{-- Newsletter Subscription Section --}}
+@include($activeTemplate . 'sections.subscribe')
+
+{{-- Main Footer --}}
+<footer class="footer bg-slate-900 text-white relative overflow-hidden">
+    {{-- Background Pattern --}}
+    <div class="absolute inset-0 lagos-pattern opacity-20"></div>
+    
+    <div class="relative z-10">
+        {{-- Main Footer Content --}}
+        <div class="section-padding">
+            <div class="container-custom">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
+                    {{-- Company Info --}}
+                    <div class="lg:col-span-1">
+                        <div class="footer-section">
+                            <a href="{{ route('home') }}" class="inline-block mb-6">
+                                <img src="{{ siteLogo() }}" alt="@lang('image')" class="h-12 w-auto" />
+                            </a>
+                            <h3 class="footer-title">{{ __(@$footer->data_values->title) }}</h3>
+                            <p class="text-gray-300 mb-6 leading-relaxed">{{ __(@$footer->data_values->description) }}</p>
+                            
+                            {{-- Social Links --}}
+                            @if($socialLinks->count())
+                                <div class="flex space-x-4">
+                                    @foreach ($socialLinks as $social)
+                                        <a href="{{ $social->data_values->social_link }}" target="_blank" 
+                                           class="w-10 h-10 bg-gray-800 hover:bg-teal-600 rounded-full flex items-center justify-center transition-all duration-300 transform hover:scale-110">
+                                            @php echo $social->data_values->social_icon; @endphp
+                                        </a>
+                                    @endforeach
+                                </div>
+                            @endif
+                        </div>
+                    </div>
+
+                    {{-- Quick Links --}}
+                    <div>
+                        <div class="footer-section">
+                            <h4 class="footer-title">@lang('Quick Links')</h4>
+                            <ul class="space-y-3">
+                                @auth
+                                    <li>
+                                        <a href="{{ route('user.home') }}" class="footer-link flex items-center space-x-2">
+                                            <i class="fas fa-tachometer-alt text-xs"></i>
+                                            <span>@lang('Dashboard')</span>
+                                        </a>
+                                    </li>
+                                @else
+                                    <li>
+                                        <a href="{{ route('user.register') }}" class="footer-link flex items-center space-x-2">
+                                            <i class="fas fa-user-plus text-xs"></i>
+                                            <span>@lang('Register')</span>
+                                        </a>
+                                    </li>
+                                @endauth
+                                <li>
+                                    <a href="{{ route('branches') }}" class="footer-link flex items-center space-x-2">
+                                        <i class="fas fa-map-marker-alt text-xs"></i>
+                                        <span>@lang('Our Branches')</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="{{ route('contact') }}" class="footer-link flex items-center space-x-2">
+                                        <i class="fas fa-envelope text-xs"></i>
+                                        <span>@lang('Contact')</span>
+                                    </a>
+                                </li>
+                                @foreach ($pages->take(3) as $page)
+                                    <li>
+                                        <a href="{{ route('pages', [$page->slug]) }}" class="footer-link flex items-center space-x-2">
+                                            <i class="fas fa-file-alt text-xs"></i>
+                                            <span>{{ __($page->name) }}</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+
+                    {{-- Legal Links --}}
+                    <div>
+                        <div class="footer-section">
+                            <h4 class="footer-title">@lang('Legal & Support')</h4>
+                            <ul class="space-y-3">
+                                @foreach ($policyPages as $policy)
+                                    <li>
+                                        <a href="{{ route('policy.pages', $policy->slug) }}" target="_blank" 
+                                           class="footer-link flex items-center space-x-2">
+                                            <i class="fas fa-shield-alt text-xs"></i>
+                                            <span>{{ __($policy->data_values->title) }}</span>
+                                        </a>
+                                    </li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    </div>
+
+                    {{-- Contact Information --}}
+                    <div>
+                        <div class="footer-section">
+                            <h4 class="footer-title">{{ __(@$footer->data_values->contact_title ?? 'Contact Info') }}</h4>
+                            <div class="space-y-4">
+                                {{-- Address --}}
+                                <div class="flex items-start space-x-3">
+                                    <div class="flex-shrink-0 w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center mt-1">
+                                        <i class="fas fa-map-marker-alt text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <p class="text-gray-300 leading-relaxed">{{ __(@$contact->data_values->contact_address) }}</p>
+                                    </div>
+                                </div>
+
+                                {{-- Email --}}
+                                <div class="flex items-center space-x-3">
+                                    <div class="flex-shrink-0 w-8 h-8 bg-orange-500 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-envelope text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <a href="mailto:{{ __(@$contact->data_values->email_address) }}" 
+                                           class="footer-link hover:text-orange-400">
+                                            {{ __(@$contact->data_values->email_address) }}
+                                        </a>
+                                    </div>
+                                </div>
+
+                                {{-- Phone --}}
+                                <div class="flex items-center space-x-3">
+                                    <div class="flex-shrink-0 w-8 h-8 bg-teal-600 rounded-lg flex items-center justify-center">
+                                        <i class="fas fa-phone text-white text-sm"></i>
+                                    </div>
+                                    <div class="flex-1">
+                                        <a href="tel:{{ __(@$contact->data_values->contact_number) }}" 
+                                           class="footer-link hover:text-teal-400">
+                                            {{ __(@$contact->data_values->contact_number) }}
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        {{-- Bottom Footer --}}
+        <div class="border-t border-gray-800">
+            <div class="container-custom">
+                <div class="flex flex-col md:flex-row items-center justify-between py-8 space-y-4 md:space-y-0">
+                    {{-- Logo --}}
+                    <div class="flex items-center space-x-4">
+                        <a href="{{ route('home') }}" class="block">
+                            <img src="{{ siteLogo() }}" alt="@lang('image')" class="h-8 w-auto opacity-80" />
+                        </a>
+                        <div class="h-6 w-px bg-gray-700"></div>
+                        <span class="text-sm text-gray-400">@lang('Powering Financial Dreams')</span>
+                    </div>
+
+                    {{-- Copyright --}}
+                    <div class="text-center md:text-right">
+                        <p class="text-sm text-gray-400">
+                            &copy; @lang('Copyright') @php echo date('Y') @endphp 
+                            <span class="text-white font-medium">{{ __(gs()->site_name) }}</span>. 
+                            @lang('All rights reserved')
+                        </p>
+                        <p class="text-xs text-gray-500 mt-1">
+                            @lang('Made with') 
+                            <span class="text-red-400">♥</span> 
+                            @lang('in Lagos, Nigeria')
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<style>
+.cookies-card.hide {
+    transform: translateY(100px);
+    opacity: 0;
+    transition: all 0.3s ease-in-out;
+}
+
+.cookies-card:not(.hide) {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+.footer-link:hover {
+    transform: translateX(4px);
+}
+
+@media (max-width: 768px) {
+    .footer-section {
+        text-align: center;
+    }
+    
+    .footer-section .flex {
+        justify-content: center;
+    }
+}
+</style>

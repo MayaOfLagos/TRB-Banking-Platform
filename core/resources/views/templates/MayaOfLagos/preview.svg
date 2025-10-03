@@ -1,0 +1,75 @@
+<!-- MayaOfLagos Template Preview Placeholder -->
+<!-- This file serves as a placeholder for the preview image -->
+<!-- A real preview.jpg image should be created showing the template design -->
+
+<svg width="800" height="600" viewBox="0 0 800 600" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background -->
+  <rect width="800" height="600" fill="#f8fafc"/>
+  
+  <!-- Header -->
+  <rect width="800" height="80" fill="#16a085"/>
+  <text x="50" y="50" font-family="Arial, sans-serif" font-size="24" font-weight="bold" fill="white">MayaOfLagos</text>
+  
+  <!-- Navigation -->
+  <rect x="400" y="25" width="300" height="30" rx="15" fill="rgba(255,255,255,0.2)"/>
+  <text x="420" y="45" font-family="Arial, sans-serif" font-size="12" fill="white">Home | About | Services | Contact</text>
+  
+  <!-- Hero Section -->
+  <rect y="80" width="800" height="300" fill="url(#gradient1)"/>
+  <defs>
+    <linearGradient id="gradient1" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#16a085;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f39c12;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Hero Content -->
+  <text x="50" y="150" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white">Modern Banking</text>
+  <text x="50" y="180" font-family="Arial, sans-serif" font-size="32" font-weight="bold" fill="white">Solutions</text>
+  <text x="50" y="220" font-family="Arial, sans-serif" font-size="16" fill="rgba(255,255,255,0.9)">Empowering financial dreams with</text>
+  <text x="50" y="240" font-family="Arial, sans-serif" font-size="16" fill="rgba(255,255,255,0.9)">cutting-edge technology</text>
+  
+  <!-- CTA Buttons -->
+  <rect x="50" y="260" width="120" height="40" rx="20" fill="#f39c12"/>
+  <text x="95" y="285" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Get Started</text>
+  
+  <rect x="190" y="260" width="120" height="40" rx="20" fill="transparent" stroke="white" stroke-width="2"/>
+  <text x="235" y="285" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="white" text-anchor="middle">Learn More</text>
+  
+  <!-- Hero Image -->
+  <circle cx="650" cy="230" r="80" fill="rgba(255,255,255,0.2)"/>
+  <rect x="620" y="200" width="60" height="60" rx="10" fill="rgba(255,255,255,0.3)"/>
+  
+  <!-- Features Section -->
+  <rect y="380" width="800" height="150" fill="white"/>
+  
+  <!-- Feature Cards -->
+  <rect x="50" y="420" width="200" height="80" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="80" cy="440" r="12" fill="#16a085"/>
+  <text x="110" y="445" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">Secure Banking</text>
+  <text x="110" y="465" font-family="Arial, sans-serif" font-size="11" fill="#64748b">Advanced security features</text>
+  
+  <rect x="300" y="420" width="200" height="80" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="330" cy="440" r="12" fill="#f39c12"/>
+  <text x="360" y="445" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">Mobile First</text>
+  <text x="360" y="465" font-family="Arial, sans-serif" font-size="11" fill="#64748b">Responsive design</text>
+  
+  <rect x="550" y="420" width="200" height="80" rx="10" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+  <circle cx="580" cy="440" r="12" fill="#16a085"/>
+  <text x="610" y="445" font-family="Arial, sans-serif" font-size="14" font-weight="bold" fill="#2c3e50">Fast Loans</text>
+  <text x="610" y="465" font-family="Arial, sans-serif" font-size="11" fill="#64748b">Quick approval process</text>
+  
+  <!-- Footer -->
+  <rect y="530" width="800" height="70" fill="#2c3e50"/>
+  <text x="50" y="555" font-family="Arial, sans-serif" font-size="12" fill="white">MayaOfLagos Template</text>
+  <text x="50" y="575" font-family="Arial, sans-serif" font-size="10" fill="#bdc3c7">Modern • Responsive • Lagos-Inspired</text>
+  
+  <!-- Social Icons -->
+  <circle cx="700" cy="560" r="8" fill="#16a085"/>
+  <circle cx="730" cy="560" r="8" fill="#f39c12"/>
+  <circle cx="760" cy="560" r="8" fill="#16a085"/>
+  
+  <!-- Template Name Badge -->
+  <rect x="650" y="20" width="130" height="25" rx="12" fill="rgba(22,160,133,0.9)"/>
+  <text x="715" y="37" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="white" text-anchor="middle">MayaOfLagos</text>
+</svg>
