@@ -234,41 +234,45 @@ if ($action == 'result') {
 			// Remove DEFINER statements that cause permission issues
 			$sql = preg_replace('/DEFINER\s*=\s*`[^`]+`@`[^`]+`/i', '', $sql);
 			
-			// Split SQL file into individual statements
-			$statements = array_filter(
-				array_map('trim', preg_split('/;\s*$/m', $sql)),
-				function($statement) {
-					return !empty($statement) && 
-						   !preg_match('/^(--|\/\*)/', $statement) &&
-						   !preg_match('/^SET\s+/i', $statement) &&
-						   !preg_match('/^START\s+TRANSACTION/i', $statement) &&
-						   !preg_match('/^COMMIT/i', $statement) &&
-						   !preg_match('/^\/\*!/i', $statement);
-				}
-			);
+			// Remove delimiter changes (PDO doesn't support DELIMITER command)
+			$sql = preg_replace('/DELIMITER\s+\$\$/i', '', $sql);
+			$sql = preg_replace('/DELIMITER\s*;/i', '', $sql);
 			
-			// Execute statements one by one
-			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-			$db->beginTransaction();
+			// Replace $$ delimiter back to ;
+			$sql = str_replace('$$', ';', $sql);
 			
-			foreach ($statements as $statement) {
-				if (!empty(trim($statement))) {
-					try {
-						$db->exec($statement);
-					} catch (PDOException $e) {
-						// Skip if it's a duplicate/exists error, otherwise throw
-						if (!preg_match('/(already exists|duplicate)/i', $e->getMessage())) {
-							throw $e;
-						}
-					}
-				}
+			// Use mysqli for better multi-query support (includes stored procedures)
+			$mysqli = new mysqli($_POST['db_host'], $_POST['db_user'], $_POST['db_pass'], $_POST['db_name']);
+			
+			if ($mysqli->connect_error) {
+				throw new Exception('Database connection failed: ' . $mysqli->connect_error);
 			}
 			
-			$db->commit();
+			// Set charset
+			$mysqli->set_charset("utf8mb4");
+			
+			// Execute multi-query (handles stored procedures properly)
+			if (!$mysqli->multi_query($sql)) {
+				throw new Exception('Database import failed: ' . $mysqli->error);
+			}
+			
+			// Process all results
+			do {
+				// Store first result set
+				if ($result = $mysqli->store_result()) {
+					$result->free();
+				}
+				// Check for more results
+			} while ($mysqli->more_results() && $mysqli->next_result());
+			
+			// Check for errors after processing all results
+			if ($mysqli->errno) {
+				throw new Exception('Database import error: ' . $mysqli->error);
+			}
+			
+			$mysqli->close();
+			
 		} catch (Exception $e) {
-			if ($db->inTransaction()) {
-				$db->rollBack();
-			}
 			$response['error'] = 'error';
 			$response['message'] = 'Problem Occurred When Importing Database!<br>Error: ' . $e->getMessage() . '<br>Please make sure the database is empty and try again.';
 		}
