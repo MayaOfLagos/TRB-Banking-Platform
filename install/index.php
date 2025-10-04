@@ -343,9 +343,41 @@ MIX_PUSHER_APP_CLUSTER='{PUSHER_APP_CLUSTER}'";
 
 	if (@$response['error'] == 'ok') {
 		try {
-			$db->query("UPDATE admins SET email='" . $_POST['email'] . "', username='" . $_POST['admin_user'] . "', password='" . password_hash($_POST['admin_pass'], PASSWORD_DEFAULT) . "' WHERE username='admin'");
+			// Reconnect to database for admin update (since we used mysqli for import)
+			if (!isset($mysqli) || !$mysqli->ping()) {
+				$mysqli = new mysqli($_POST['db_host'], $_POST['db_user'], $_POST['db_pass'], $_POST['db_name']);
+				if ($mysqli->connect_error) {
+					throw new Exception('Failed to reconnect to database');
+				}
+				$mysqli->set_charset("utf8mb4");
+			}
+			
+			// Prepare secure statement to prevent SQL injection
+			$email = $mysqli->real_escape_string($_POST['email']);
+			$username = $mysqli->real_escape_string($_POST['admin_user']);
+			$password = password_hash($_POST['admin_pass'], PASSWORD_DEFAULT);
+			
+			// Update admin credentials
+			$updateQuery = "UPDATE admins SET email='$email', username='$username', password='$password' WHERE id=1";
+			
+			if (!$mysqli->query($updateQuery)) {
+				throw new Exception('Failed to update admin credentials: ' . $mysqli->error);
+			}
+			
+			// Verify update was successful
+			$checkQuery = "SELECT username, email FROM admins WHERE id=1";
+			$result = $mysqli->query($checkQuery);
+			if ($result && $row = $result->fetch_assoc()) {
+				// Admin updated successfully
+				$response['admin_updated'] = true;
+			} else {
+				throw new Exception('Could not verify admin update');
+			}
+			
+			$mysqli->close();
 		} catch (Exception $e) {
-			$response['message'] = 'EasyInstaller was unable to set the credentials of admin.';
+			$response['error'] = 'error';
+			$response['message'] = 'Installation completed but failed to update admin credentials: ' . $e->getMessage() . '<br>Please login with default credentials and change them in admin panel.';
 		}
 	}
 }
@@ -467,18 +499,41 @@ $sectionTitle =  empty($action) ? 'Terms of Use' : $action;
 									echo '<h2 class="text-3xl font-bold text-gray-800">Installation Successful!</h2>';
 									echo '<p class="text-gray-600 text-lg">Your system has been installed and configured successfully.</p>';
 									
+									// Show admin credentials
+									if (isset($_POST['admin_user']) && isset($_POST['email'])) {
+										echo '<div class="bg-blue-50 border-l-4 border-blue-400 p-6 rounded-lg text-left max-w-2xl mx-auto">';
+										echo '<div class="flex items-center mb-3"><i class="fas fa-user-shield text-blue-600 text-xl mr-3"></i><h3 class="text-lg font-bold text-blue-800">Admin Login Credentials</h3></div>';
+										echo '<div class="bg-white p-4 rounded-lg space-y-2">';
+										echo '<p class="text-gray-700"><span class="font-semibold">Admin URL:</span> <a href="' . appUrl() . 'admin" class="text-indigo-600 hover:underline">' . appUrl() . 'admin</a></p>';
+										echo '<p class="text-gray-700"><span class="font-semibold">Username:</span> <code class="bg-gray-100 px-2 py-1 rounded">' . htmlspecialchars($_POST['admin_user']) . '</code></p>';
+										echo '<p class="text-gray-700"><span class="font-semibold">Email:</span> <code class="bg-gray-100 px-2 py-1 rounded">' . htmlspecialchars($_POST['email']) . '</code></p>';
+										echo '<p class="text-gray-700"><span class="font-semibold">Password:</span> <code class="bg-gray-100 px-2 py-1 rounded">The password you entered</code></p>';
+										echo '</div>';
+										echo '<p class="text-sm text-blue-700 mt-3"><i class="fas fa-info-circle mr-1"></i>Please save these credentials in a secure location.</p>';
+										echo '</div>';
+									}
+									
 									if (@$response['message']) {
 										echo '<div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 rounded-lg"><div class="flex items-center"><i class="fas fa-exclamation-triangle text-yellow-600 mr-3"></i><p class="text-yellow-800">' . $response['message'] . '</p></div></div>';
 									}
 									
 									echo '<div class="bg-red-50 border-l-4 border-red-400 p-6 rounded-lg my-6">';
-									echo '<div class="flex items-center mb-2"><i class="fas fa-shield-alt text-red-600 text-xl mr-3"></i><h3 class="text-lg font-bold text-red-800">Important Security Step</h3></div>';
-									echo '<p class="text-red-700 font-medium">Please delete the "install" folder from your server immediately for security reasons.</p>';
+									echo '<div class="flex items-center mb-2"><i class="fas fa-shield-alt text-red-600 text-xl mr-3"></i><h3 class="text-lg font-bold text-red-800">Important Security Steps</h3></div>';
+									echo '<ul class="text-left text-red-700 space-y-2 ml-6">';
+									echo '<li class="flex items-start"><i class="fas fa-chevron-right text-red-600 mr-2 mt-1"></i><span>Delete the <strong>"install"</strong> folder from your server immediately</span></li>';
+									echo '<li class="flex items-start"><i class="fas fa-chevron-right text-red-600 mr-2 mt-1"></i><span>Change your admin password after first login</span></li>';
+									echo '<li class="flex items-start"><i class="fas fa-chevron-right text-red-600 mr-2 mt-1"></i><span>Set APP_DEBUG=false in .env file for production</span></li>';
+									echo '</ul>';
 									echo '</div>';
 									
-									echo '<a href="' . appUrl() . '" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">';
-									echo '<i class="fas fa-home mr-2"></i> Go to Website <i class="fas fa-arrow-right ml-2"></i>';
+									echo '<div class="flex flex-col sm:flex-row gap-4 justify-center">';
+									echo '<a href="' . appUrl() . 'admin" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">';
+									echo '<i class="fas fa-user-shield mr-2"></i> Go to Admin Panel <i class="fas fa-arrow-right ml-2"></i>';
 									echo '</a>';
+									echo '<a href="' . appUrl() . '" class="inline-flex items-center px-8 py-4 bg-gradient-to-r from-green-600 to-teal-600 hover:from-green-700 hover:to-teal-700 text-white font-bold rounded-xl shadow-lg hover:shadow-xl transform hover:scale-105 transition-all duration-200">';
+									echo '<i class="fas fa-home mr-2"></i> View Website <i class="fas fa-arrow-right ml-2"></i>';
+									echo '</a>';
+									echo '</div>';
 									echo '</div>';
 								} else {
 									echo '<div class="text-center space-y-6">';
