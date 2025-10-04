@@ -228,13 +228,49 @@ if ($action == 'result') {
 
 	if (@$response['error'] == 'ok') {
 		try {
-			$query = file_get_contents("database.sql");
-			$stmt = $db->prepare($query);
-			$stmt->execute();
-			$stmt->closeCursor();
+			// Read and clean the SQL file
+			$sql = file_get_contents("database.sql");
+			
+			// Remove DEFINER statements that cause permission issues
+			$sql = preg_replace('/DEFINER\s*=\s*`[^`]+`@`[^`]+`/i', '', $sql);
+			
+			// Split SQL file into individual statements
+			$statements = array_filter(
+				array_map('trim', preg_split('/;\s*$/m', $sql)),
+				function($statement) {
+					return !empty($statement) && 
+						   !preg_match('/^(--|\/\*)/', $statement) &&
+						   !preg_match('/^SET\s+/i', $statement) &&
+						   !preg_match('/^START\s+TRANSACTION/i', $statement) &&
+						   !preg_match('/^COMMIT/i', $statement) &&
+						   !preg_match('/^\/\*!/i', $statement);
+				}
+			);
+			
+			// Execute statements one by one
+			$db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+			$db->beginTransaction();
+			
+			foreach ($statements as $statement) {
+				if (!empty(trim($statement))) {
+					try {
+						$db->exec($statement);
+					} catch (PDOException $e) {
+						// Skip if it's a duplicate/exists error, otherwise throw
+						if (!preg_match('/(already exists|duplicate)/i', $e->getMessage())) {
+							throw $e;
+						}
+					}
+				}
+			}
+			
+			$db->commit();
 		} catch (Exception $e) {
+			if ($db->inTransaction()) {
+				$db->rollBack();
+			}
 			$response['error'] = 'error';
-			$response['message'] = 'Problem Occurred When Importing Database!<br>Please Make Sure The Database is Empty.';
+			$response['message'] = 'Problem Occurred When Importing Database!<br>Error: ' . $e->getMessage() . '<br>Please make sure the database is empty and try again.';
 		}
 	}
 
@@ -446,13 +482,29 @@ $sectionTitle =  empty($action) ? 'Terms of Use' : $action;
 									echo '<h2 class="text-3xl font-bold text-gray-800">Installation Failed</h2>';
 									
 									if (@$response['message']) {
-										echo '<div class="bg-red-50 border-l-4 border-red-400 p-6 rounded-lg"><p class="text-red-700 text-lg font-medium">' . $response['message'] . '</p></div>';
+										echo '<div class="bg-red-50 border-l-4 border-red-400 p-6 rounded-lg">';
+										echo '<p class="text-red-700 text-lg font-medium mb-4">' . $response['message'] . '</p>';
+										
+										// Show helpful tips based on error type
+										if (strpos($response['message'], 'Database') !== false) {
+											echo '<div class="bg-white p-4 rounded-lg mt-4 text-left">';
+											echo '<p class="text-sm font-semibold text-gray-800 mb-2"><i class="fas fa-lightbulb text-yellow-500 mr-2"></i>Common Solutions:</p>';
+											echo '<ul class="list-disc list-inside text-sm text-gray-700 space-y-1">';
+											echo '<li>Ensure your database is completely empty (no tables)</li>';
+											echo '<li>Check that your database user has full privileges (CREATE, DROP, ALTER, INSERT)</li>';
+											echo '<li>Verify your database credentials are correct</li>';
+											echo '<li>Try using a fresh/new database</li>';
+											echo '<li>If using shared hosting, ensure your database user has DEFINER privileges</li>';
+											echo '</ul>';
+											echo '</div>';
+										}
+										echo '</div>';
 									} else {
 										echo '<p class="text-red-600 text-lg">Your server is not capable of handling the request.</p>';
 									}
 									
-									echo '<p class="text-gray-600">Please try again or contact support if the issue persists.</p>';
-									echo '<div class="flex flex-col sm:flex-row gap-4 justify-center">';
+									echo '<p class="text-gray-600 mt-4">Please try again or contact support if the issue persists.</p>';
+									echo '<div class="flex flex-col sm:flex-row gap-4 justify-center mt-6">';
 									echo '<a href="?action=information" class="inline-flex items-center justify-center px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"><i class="fas fa-redo mr-2"></i> Try Again</a>';
 									echo '<a href="https://viserlab.com/support" target="_blank" class="inline-flex items-center justify-center px-6 py-3 bg-gray-600 hover:bg-gray-700 text-white font-semibold rounded-lg shadow-lg hover:shadow-xl transform hover:scale-105 transition-all"><i class="fas fa-life-ring mr-2"></i> Get Support</a>';
 									echo '</div></div>';

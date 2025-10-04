@@ -25,7 +25,7 @@ DELIMITER $$
 --
 -- Procedures
 --
-CREATE DEFINER=`root`@`localhost` PROCEDURE `UpdateRebateAnalytics` (IN `p_user_id` INT)   BEGIN
+CREATE PROCEDURE `UpdateRebateAnalytics` (IN `p_user_id` INT)   BEGIN
                 DECLARE v_total_transactions INT DEFAULT 0;
                 DECLARE v_total_earned DECIMAL(10,2) DEFAULT 0.00;
                 DECLARE v_pending_amount DECIMAL(10,2) DEFAULT 0.00;
