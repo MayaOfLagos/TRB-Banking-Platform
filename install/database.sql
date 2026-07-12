@@ -11,6 +11,29 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
+-- Idempotency preamble: drop any objects this dump creates so re-import works.
+SET FOREIGN_KEY_CHECKS = 0;
+DROP PROCEDURE IF EXISTS `UpdateRebateAnalytics`;
+DROP TABLE IF EXISTS
+  `admins`, `admin_notifications`, `admin_password_resets`, `api_configurations`,
+  `assign_branch_staff`, `balance_transfers`, `beneficiaries`, `branches`,
+  `branch_staff`, `branch_staff_password_resets`, `countries`, `cron_jobs`,
+  `cron_job_logs`, `cron_schedules`, `deposits`, `device_tokens`, `dps`,
+  `dps_plans`, `extensions`, `fdrs`, `fdr_plans`, `file_managers`, `forms`,
+  `fraud_logs`, `frontends`, `gateways`, `gateway_currencies`, `general_settings`,
+  `installments`, `languages`, `loans`, `loan_plans`, `migrations`,
+  `notification_logs`, `notification_templates`, `operators`, `operator_groups`,
+  `other_banks`, `otp_verifications`, `pages`, `password_resets`, `permissions`,
+  `permission_role`, `personal_access_tokens`, `product_uploads`,
+  `push_notifications`, `rebate_analytics_cache`, `rebate_categories`,
+  `rebate_programs`, `rebate_status_changes`, `rebate_transactions`,
+  `referral_settings`, `roles`, `subscribers`, `support_attachments`,
+  `support_messages`, `support_tickets`, `table_configurations`, `transactions`,
+  `users`, `user_billing_codes`, `user_logins`, `user_rebates`,
+  `wire_transfer_settings`, `withdrawals`, `withdrawal_controls`,
+  `withdraw_methods`;
+SET FOREIGN_KEY_CHECKS = 1;
+
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;

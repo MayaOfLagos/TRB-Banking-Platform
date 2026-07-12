@@ -56,11 +56,22 @@ assets/images/language/*
 assets/images/extensions/*
 assets/images/firebase/*
 assets/images/withdraw_method/*
+assets/verify/*
 
 # Temporary files
 *.tmp
 *.temp
 *.cache
+
+# Local dev / debug leftovers
+_php_srv.log
+_php_srv.err.log
+_probe.php
+.claude/
+
+# Web CLI runtime
+webcli.log
+.webcli_ratelimit.json
 
 # Documentation builds
 docs/_build/

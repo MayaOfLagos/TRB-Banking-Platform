@@ -36,8 +36,8 @@
                 <div class="flex items-center justify-between">
                     <h2 class="text-xl md:text-2xl font-bold text-gray-900 dark:text-white">@lang('Transfer Details')</h2>
                     <div class="flex items-center space-x-3">
-                        <button id="transferInfoBtn" 
-                                class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
+                        <button id="transferInfoBtn"
+                                class="hidden md:inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium rounded-lg transition-all duration-200 hover:scale-105 hover:shadow-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800">
                             <i class="las la-info-circle mr-2 text-lg"></i>
                             @lang('More Info')
                         </button>

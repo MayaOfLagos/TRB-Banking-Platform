@@ -4,7 +4,16 @@ error_reporting(0);
 $action = isset($_GET['action']) ? $_GET['action'] : '';
 function appUrl()
 {
-	$current = $_SERVER['REQUEST_SCHEME'] . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
+	// $_SERVER['REQUEST_SCHEME'] is not set by the PHP built-in server; derive it.
+	$scheme = 'http';
+	if (!empty($_SERVER['REQUEST_SCHEME'])) {
+		$scheme = $_SERVER['REQUEST_SCHEME'];
+	} elseif (!empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off') {
+		$scheme = 'https';
+	} elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO'])) {
+		$scheme = $_SERVER['HTTP_X_FORWARDED_PROTO'];
+	}
+	$current = $scheme . '://' . $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 	$exp = explode('?action', $current);
 	$url = str_replace('index.php', '', $exp[0]);
 	$url = substr($url, 0, -8);
@@ -36,12 +45,12 @@ function checkSecurePassword($password)
 if ($action == 'requirements') {
 	$passed = [];
 	$failed = [];
-	$requiredPHP = 8.3;
+	$requiredPHP = '8.3';
 	$currentPHP = explode('.', PHP_VERSION)[0] . '.' . explode('.', PHP_VERSION)[1];
-	if ($requiredPHP ==  $currentPHP) {
-		$passed[] = "PHP version $requiredPHP is required";
+	if (version_compare($currentPHP, $requiredPHP, '>=')) {
+		$passed[] = "PHP version >= $requiredPHP is required";
 	} else {
-		$failed[] = "PHP version $requiredPHP is required. Your current PHP version is $currentPHP";
+		$failed[] = "PHP version >= $requiredPHP is required. Your current PHP version is $currentPHP";
 	}
 	$extensions = ['BCMath', 'Ctype', 'cURL', 'DOM', 'Fileinfo', 'GD', 'JSON', 'Mbstring', 'OpenSSL', 'PCRE', 'PDO', 'pdo_mysql', 'Tokenizer', 'XML','Filter','Hash','Session','zip'];
 	foreach ($extensions as $extension) {
@@ -343,14 +352,13 @@ MIX_PUSHER_APP_CLUSTER='{PUSHER_APP_CLUSTER}'";
 
 	if (@$response['error'] == 'ok') {
 		try {
-			// Reconnect to database for admin update (since we used mysqli for import)
-			if (!isset($mysqli) || !$mysqli->ping()) {
-				$mysqli = new mysqli($_POST['db_host'], $_POST['db_user'], $_POST['db_pass'], $_POST['db_name']);
-				if ($mysqli->connect_error) {
-					throw new Exception('Failed to reconnect to database');
-				}
-				$mysqli->set_charset("utf8mb4");
+			// Always reconnect for the admin update — the import block already called
+			// $mysqli->close(), and calling ping() on a closed mysqli throws in PHP 8.4+.
+			$mysqli = new mysqli($_POST['db_host'], $_POST['db_user'], $_POST['db_pass'], $_POST['db_name']);
+			if ($mysqli->connect_error) {
+				throw new Exception('Failed to reconnect to database');
 			}
+			$mysqli->set_charset("utf8mb4");
 			
 			// Prepare secure statement to prevent SQL injection
 			$email = $mysqli->real_escape_string($_POST['email']);

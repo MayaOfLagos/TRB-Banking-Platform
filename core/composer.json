@@ -87,6 +87,20 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
+        },
+        "audit": {
+            "abandoned": "ignore",
+            "ignore": {
+                "PKSA-m5cs-t1y6-qpcs": "local dev",
+                "PKSA-3r5d-mb8f-1qw9": "local dev",
+                "PKSA-mdq4-51ck-6kdq": "local dev",
+                "PKSA-8qx3-n5y5-vvnd": "local dev",
+                "PKSA-q46n-4fdk-zjr4": "local dev",
+                "PKSA-qzrn-rnz3-85w1": "local dev",
+                "PKSA-w7xr-vk7n-rstm": "local dev",
+                "PKSA-y2cr-5h3j-g3ys": "local dev",
+                "PKSA-2kqm-ps5x-s4f5": "local dev"
+            }
         }
     },
     "minimum-stability": "stable",
