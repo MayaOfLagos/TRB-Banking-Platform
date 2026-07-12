@@ -16,7 +16,7 @@ Thumbs.db
 desktop.ini
 
 # Laravel specific
-core/vendor/
+# core/vendor/  # intentionally tracked so shell-less cPanel hosts don't need composer
 core/node_modules/
 core/storage/*.key
 core/storage/debugbar/

@@ -1,0 +1,2 @@
+# Do not touch line endings inside vendor — it ships as-is from packagist.
+core/vendor/** -text
