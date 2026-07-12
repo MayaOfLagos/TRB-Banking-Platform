@@ -183,6 +183,29 @@ function d_find_php(): string {
     return defined('PHP_BINARY') && PHP_BINARY ? PHP_BINARY : 'php';
 }
 
+// Detect the user's home dir. LiteSpeed's shell_exec context often lacks a HOME
+// env var, which breaks Composer. Falls back to posix, then to the repo path.
+function d_home(): string {
+    $home = getenv('HOME');
+    if ($home) return $home;
+    if (function_exists('posix_geteuid')) {
+        $pw = @posix_getpwuid(posix_geteuid());
+        if (!empty($pw['dir'])) return $pw['dir'];
+    }
+    // /home/<user>/... — walk up two dirs
+    $parts = explode('/', trim(D_ROOT, '/'));
+    if (($parts[0] ?? '') === 'home' && !empty($parts[1])) return '/home/' . $parts[1];
+    return sys_get_temp_dir();
+}
+
+// Prefix for shell commands so Composer's installer/runner sees HOME + COMPOSER_HOME.
+function d_env_prefix(): string {
+    $home = d_home();
+    $ch   = $home . '/.composer';
+    if (!is_dir($ch)) @mkdir($ch, 0755, true);
+    return 'HOME=' . escapeshellarg($home) . ' COMPOSER_HOME=' . escapeshellarg($ch) . ' ';
+}
+
 function d_download_composer(): array {
     if (!function_exists('shell_exec')) return ['ok' => false, 'error' => 'shell_exec is disabled on this host — cannot run the installer.'];
     if (!ini_get('allow_url_fopen')) return ['ok' => false, 'error' => 'allow_url_fopen is off — cannot download the installer.'];
@@ -195,7 +218,8 @@ function d_download_composer(): array {
     $target_dir  = dirname(D_PHAR);
     $target_name = basename(D_PHAR);
     $php = d_find_php();
-    $cmd = escapeshellarg($php) . ' ' . escapeshellarg($installer)
+    $cmd = d_env_prefix()
+         . escapeshellarg($php) . ' ' . escapeshellarg($installer)
          . ' --install-dir=' . escapeshellarg($target_dir)
          . ' --filename='    . escapeshellarg($target_name) . ' 2>&1';
     $out = (string)@shell_exec($cmd);
@@ -220,7 +244,7 @@ function d_start_install(): array {
 
     $php = d_find_php();
     $cmd = 'cd ' . escapeshellarg(D_CORE)
-         . ' && nohup ' . escapeshellarg($php) . ' -d memory_limit=-1 ' . escapeshellarg($composer)
+         . ' && ' . d_env_prefix() . 'nohup ' . escapeshellarg($php) . ' -d memory_limit=-1 ' . escapeshellarg($composer)
          . ' install --no-dev --optimize-autoloader --no-security-blocking --no-interaction --no-progress'
          . ' >> ' . escapeshellarg(D_LOG) . ' 2>&1 </dev/null &';
     @shell_exec($cmd);
