@@ -80,5 +80,8 @@ composer_install.log
 # Artisan runner runtime
 artisan-runner.log
 
+# Reset admin runtime
+reset-admin.log
+
 # Documentation builds
 docs/_build/
