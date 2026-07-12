@@ -73,5 +73,9 @@ _probe.php
 webcli.log
 .webcli_ratelimit.json
 
+# Deploy helper runtime
+composer.phar
+composer_install.log
+
 # Documentation builds
 docs/_build/
